@@ -10,16 +10,20 @@ import static org.junit.Assert.*;
 public class QuoteGeneratorTest {
 
     @Test
-    public void getQuote() throws Exception {
+    public void getQuote_shouldReadFileAndReturnCorrectValues() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
-        Quote quote = quoteGenerator.getQuote("test-market-data.csv", 1000);
+        Quote quote = quoteGenerator.getQuote("src/test/resources/test-market-data.csv", 1000).get();
         assertEquals(0.07, quote.getYearlyInterestRate(), 0.001);
+
+        Quote quote2 = quoteGenerator.getQuote("src/test/resources/test-market-data.csv", 2000).get();
+        assertEquals(0.073, quote2.getYearlyInterestRate(), 0.001);
     }
 
-    @Test(expected = LoanRequestFailureException.class)
+    @Test
     public void findBestQuote_shouldThrowException_ifNoOfferAreAvailable() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
-        quoteGenerator.calculateBestQuote(new TreeSet<>(), 10000);
+        assertFalse(quoteGenerator.calculateBestQuote(new TreeSet<>(), 10000)
+                .isPresent());
     }
 
     @Test
@@ -27,30 +31,36 @@ public class QuoteGeneratorTest {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
         TreeSet<MarketOffer> marketOffers = new TreeSet<>();
         double rate = 0.043;
+
         marketOffers.add(new MarketOffer("Jane", rate, 1000));
-        Quote bestQuote = quoteGenerator.calculateBestQuote(marketOffers, 1000);
-        assertEquals(rate, bestQuote.getYearlyInterestRate(), 0.001);
+
+        Quote quote = quoteGenerator.calculateBestQuote(marketOffers, 1000).get();
+        assertEquals(rate, quote.getYearlyInterestRate(), 0.001);
     }
 
     @Test
     public void findBestQuote_shouldReturnCorrectRate_whenTwoFullOffersNeeded() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
         TreeSet<MarketOffer> marketOffers = new TreeSet<>();
+
         marketOffers.add(new MarketOffer("Jane", 0.04, 500));
         marketOffers.add(new MarketOffer("Janet", 0.06, 500));
-        Quote bestQuote = quoteGenerator.calculateBestQuote(marketOffers, 1000);
-        assertEquals(0.05, bestQuote.getYearlyInterestRate(), 0.001);
+
+        Quote quote = quoteGenerator.calculateBestQuote(marketOffers, 1000).get();
+        assertEquals(0.05, quote.getYearlyInterestRate(), 0.001);
     }
 
     @Test
     public void findBestQuote_shouldReturnCorrectRate_whenTwoFullAndOnePartialOffersNeeded() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
         TreeSet<MarketOffer> marketOffers = new TreeSet<>();
+
         marketOffers.add(new MarketOffer("Jane", 0.04, 500));
         marketOffers.add(new MarketOffer("Janet", 0.06, 500));
         marketOffers.add(new MarketOffer("Janet", 0.10, 1000));
-        Quote bestQuote = quoteGenerator.calculateBestQuote(marketOffers, 1500);
-        assertEquals(0.067, bestQuote.getYearlyInterestRate(), 0.001);
+
+        Quote quote = quoteGenerator.calculateBestQuote(marketOffers, 1500).get();
+        assertEquals(0.067, quote.getYearlyInterestRate(), 0.001);
     }
 
 }

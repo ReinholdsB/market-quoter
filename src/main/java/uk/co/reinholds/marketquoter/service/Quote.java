@@ -42,29 +42,24 @@ public class Quote {
     }
 
 
-    public double getMonthlyRepayment() {
+    protected double getMonthlyRepayment() {
         return monthlyRepayment;
     }
 
-    public double getTotalRepayment() {
+    protected double getTotalRepayment() {
         return monthlyRepayment * periodInMonths;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public int getPeriodInMonths() {
-        return periodInMonths;
-    }
-
-    public double getYearlyInterestRate() {
+    protected double getYearlyInterestRate() {
         return yearlyInterestRate;
     }
 
     public void print() {
         System.out.println("Requested amount: £" + amount);
-        System.out.println("Rate: " + yearlyInterestRate * 100 + "%");
+        BigDecimal interestRateAsPercentage = BigDecimal.valueOf(yearlyInterestRate)
+                .multiply(BigDecimal.valueOf(100))
+                .setScale(1, RoundingMode.HALF_UP);
+        System.out.println("Rate: " + interestRateAsPercentage + "%");
         System.out.println("Monthly repayment: £" + monthlyRepayment);
         System.out.println("Total repayment: £" + getTotalRepayment());
     }
