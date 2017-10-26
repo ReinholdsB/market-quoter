@@ -15,7 +15,7 @@ public class QuoteGenerator {
 
     public Quote getQuote(String marketFileLocation, int loanAmount) {
         TreeSet<MarketOffer> marketOffers = readMarketOffersFromFile(marketFileLocation);
-        return findBestQuote(marketOffers, loanAmount);
+        return calculateBestQuote(marketOffers, loanAmount);
     }
 
     protected TreeSet<MarketOffer> readMarketOffersFromFile(String marketFileLocation) {
@@ -43,12 +43,12 @@ public class QuoteGenerator {
     }
 
 
-    protected Quote findBestQuote(TreeSet<MarketOffer> marketOffers, int loanAmount) {
+    protected Quote calculateBestQuote(TreeSet<MarketOffer> marketOffers, int loanAmount) {
         BigDecimal totalInterestRate = BigDecimal.ZERO;
         int residualAmountNeeded = loanAmount;
         while (residualAmountNeeded > 0) {
             if (marketOffers.isEmpty()) throw new LoadRequestFailureException("Not enough market offers to fulfill loan request!");
-            MarketOffer offer = marketOffers.first();
+            MarketOffer offer = marketOffers.pollFirst();
             if (residualAmountNeeded - offer.getAmount() >= 0) {
                 totalInterestRate = totalInterestRate.add(
                         BigDecimal.valueOf(offer.getAmount())
@@ -60,7 +60,6 @@ public class QuoteGenerator {
                         BigDecimal.valueOf(offer.getAmount() - residualAmountNeeded)
                                 .divide(BigDecimal.valueOf(loanAmount), MathContext.DECIMAL32)
                                 .multiply(BigDecimal.valueOf(offer.getRate())));
-                ;
                 residualAmountNeeded = 0;
             }
         }
