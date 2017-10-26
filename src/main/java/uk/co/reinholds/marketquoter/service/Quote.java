@@ -61,4 +61,11 @@ public class Quote {
     public double getYearlyInterestRate() {
         return yearlyInterestRate;
     }
+
+    public void print() {
+        System.out.println("Requested amount: £" + amount);
+        System.out.println("Rate: " + yearlyInterestRate * 100 + "%");
+        System.out.println("Monthly repayment: £" + monthlyRepayment);
+        System.out.println("Total repayment: £" + getTotalRepayment());
+    }
 }

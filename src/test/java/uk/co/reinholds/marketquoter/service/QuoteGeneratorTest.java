@@ -12,11 +12,11 @@ public class QuoteGeneratorTest {
     @Test
     public void getQuote() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
-        Quote quote = quoteGenerator.getQuote("Market Data for Exercise - csv.csv", 1000);
+        Quote quote = quoteGenerator.getQuote("test-market-data.csv", 1000);
         assertEquals(0.07, quote.getYearlyInterestRate(), 0.001);
     }
 
-    @Test(expected = LoadRequestFailureException.class)
+    @Test(expected = LoanRequestFailureException.class)
     public void findBestQuote_shouldThrowException_ifNoOfferAreAvailable() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
         quoteGenerator.calculateBestQuote(new TreeSet<>(), 10000);

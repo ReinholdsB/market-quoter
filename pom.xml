@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>market-quoter</name>
-	<description>Command line application to return best load from a list of avaialble lenders.</description>
+	<description>Command line application to return best load from a list of available lenders.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
