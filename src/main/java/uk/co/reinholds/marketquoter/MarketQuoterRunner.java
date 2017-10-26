@@ -1,6 +1,6 @@
 package uk.co.reinholds.marketquoter;
 
-import uk.co.reinholds.marketquoter.service.Quote;
+import uk.co.reinholds.marketquoter.service.domain.Quote;
 import uk.co.reinholds.marketquoter.service.QuoteGenerator;
 
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class MarketQuoterRunner {
     }
 
     protected boolean run(String marketFileLocation, int loanAmount) {
-        Optional<Quote> quote = new QuoteGenerator().getQuote(marketFileLocation, loanAmount);
+        Optional<Quote> quote = new QuoteGenerator().getBestAvailableQuote(marketFileLocation, loanAmount);
         if (quote.isPresent()){
             System.out.println("=================================================");
             System.out.println("Best loan offer that I can make is as follows:");

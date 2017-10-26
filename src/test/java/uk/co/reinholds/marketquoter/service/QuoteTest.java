@@ -1,6 +1,7 @@
 package uk.co.reinholds.marketquoter.service;
 
 import org.junit.Test;
+import uk.co.reinholds.marketquoter.service.domain.Quote;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,6 +1,7 @@
 package uk.co.reinholds.marketquoter.service;
 
-import uk.co.reinholds.marketquoter.dto.MarketOffer;
+import uk.co.reinholds.marketquoter.service.domain.MarketOffer;
+import uk.co.reinholds.marketquoter.service.domain.Quote;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,7 +13,7 @@ import java.util.TreeSet;
 
 public class QuoteGenerator {
 
-    public Optional<Quote> getQuote(String marketFileLocation, int loanAmount) {
+    public Optional<Quote> getBestAvailableQuote(String marketFileLocation, int loanAmount) {
         TreeSet<MarketOffer> marketOffers = readMarketOffersFromFile(marketFileLocation);
         return calculateBestQuote(marketOffers, loanAmount);
     }

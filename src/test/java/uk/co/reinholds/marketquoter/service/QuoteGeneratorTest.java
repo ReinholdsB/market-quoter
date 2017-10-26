@@ -1,7 +1,8 @@
 package uk.co.reinholds.marketquoter.service;
 
 import org.junit.Test;
-import uk.co.reinholds.marketquoter.dto.MarketOffer;
+import uk.co.reinholds.marketquoter.service.domain.MarketOffer;
+import uk.co.reinholds.marketquoter.service.domain.Quote;
 
 import java.util.TreeSet;
 
@@ -12,10 +13,10 @@ public class QuoteGeneratorTest {
     @Test
     public void getQuote_shouldReadFileAndReturnCorrectValues() throws Exception {
         QuoteGenerator quoteGenerator = new QuoteGenerator();
-        Quote quote = quoteGenerator.getQuote("src/test/resources/test-market-data.csv", 1000).get();
+        Quote quote = quoteGenerator.getBestAvailableQuote("src/test/resources/test-market-data.csv", 1000).get();
         assertEquals(0.07, quote.getYearlyInterestRate(), 0.001);
 
-        Quote quote2 = quoteGenerator.getQuote("src/test/resources/test-market-data.csv", 2000).get();
+        Quote quote2 = quoteGenerator.getBestAvailableQuote("src/test/resources/test-market-data.csv", 2000).get();
         assertEquals(0.073, quote2.getYearlyInterestRate(), 0.001);
     }
 

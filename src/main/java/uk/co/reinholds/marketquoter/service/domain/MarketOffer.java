@@ -1,4 +1,4 @@
-package uk.co.reinholds.marketquoter.dto;
+package uk.co.reinholds.marketquoter.service.domain;
 
 public class MarketOffer implements Comparable<MarketOffer> {
 

@@ -1,4 +1,4 @@
-package uk.co.reinholds.marketquoter.service;
+package uk.co.reinholds.marketquoter.service.domain;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -42,15 +42,15 @@ public class Quote {
     }
 
 
-    protected double getMonthlyRepayment() {
+    public double getMonthlyRepayment() {
         return monthlyRepayment;
     }
 
-    protected double getTotalRepayment() {
+    public double getTotalRepayment() {
         return monthlyRepayment * periodInMonths;
     }
 
-    protected double getYearlyInterestRate() {
+    public double getYearlyInterestRate() {
         return yearlyInterestRate;
     }
 
