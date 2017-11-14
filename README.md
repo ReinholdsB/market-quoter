@@ -1,6 +1,6 @@
 # Market Loan Quoter
 
-##Description
+## Description
 CLI Application to provide best available compound loan out of available market offers.
 
 ## Building the application
